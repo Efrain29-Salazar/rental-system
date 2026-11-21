@@ -4,7 +4,7 @@
   "description": "API del sistema de gestión de arriendos",
   "main": "dist/server.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --runInBand",
     "dev": "tsx watch src/server.ts",
     "build": "tsc -p tsconfig.build.json",
     "start": "node dist/server.js"
