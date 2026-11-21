@@ -1,8 +1,9 @@
 import express from 'express';
 import cors from 'cors';
-import { InMemoryPropertyRepository } from './modules/properties/adapters/persistence/InMemoryPropertyRepository';
 import { PropertyService } from './modules/properties/application/PropertyService';
 import { createPropertyRouter } from './modules/properties/adapters/http/propertyRoutes';
+import { createPropertyRepository } from './modules/properties/adapters/persistence/createPropertyRepository';
+
 
 import { errorHandler, notFoundHandler } from './shared/httpErrorHandlers';
 
@@ -14,8 +15,7 @@ app.use(cors());
 
 // Permite leer el cuerpo de las peticiones en formato JSON
 app.use(express.json());
-
-const propertyRepository = new InMemoryPropertyRepository();
+const propertyRepository = createPropertyRepository();
 const propertyService = new PropertyService(propertyRepository);
 app.use('/properties', createPropertyRouter(propertyService));
 
