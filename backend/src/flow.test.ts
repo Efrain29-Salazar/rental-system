@@ -28,7 +28,7 @@ describe('Contracts and payments flow', () => {
 
   it('lists the overdue payments of an old contract and registers one of them as paid', async () => {
     const contract = await createContract('2025-01-15', '2025-04-15');
-    const ofContract = (payments: { contractId: number }[]) => payments.filter((payment) => payment.contractId === contract.body.id);
+    const ofContract = (payments: { id: number; contractId: number }[]) => payments.filter((payment) => payment.contractId === contract.body.id);
 
     const overdue = await request(app).get('/payments/overdue');
     const paid = await request(app).patch(`/payments/${ofContract(overdue.body)[0].id}/pay`);
