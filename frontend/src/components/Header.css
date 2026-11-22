@@ -1,0 +1,30 @@
+.header {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-height: 64px;
+}
+
+.header-brand {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.header-tagline {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+}
+
+/* Pantallas angostas: el subtítulo se esconde para que el nombre quepa. */
+@media (max-width: 480px) {
+  .header-tagline {
+    display: none;
+  }
+}
