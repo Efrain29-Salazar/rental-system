@@ -3,27 +3,20 @@ import cors from 'cors';
 import { PropertyService } from './modules/properties/application/PropertyService';
 import { createPropertyRouter } from './modules/properties/adapters/http/propertyRoutes';
 import { createPropertyRepository } from './modules/properties/adapters/persistence/createPropertyRepository';
-
-
-import { errorHandler, notFoundHandler } from './shared/httpErrorHandlers';
-
-// ===== imports [A] Properties =====
-
-// ===== imports [B] Tenants =====
 import { createTenantRepository } from './modules/tenants/adapters/persistence/createTenantRepository';
 import { TenantService } from './modules/tenants/application/TenantService';
 import { createTenantRouter } from './modules/tenants/adapters/http/tenantRoutes';
-
-
-
-// ===== imports [B] Payments =====
 import { createPaymentRepository } from './modules/payments/adapters/persistence/createPaymentRepository';
 import { PaymentService } from './modules/payments/application/PaymentService';
 import { createPaymentRouter } from './modules/payments/adapters/http/paymentRoutes';
 import { getToday } from './shared/dates';
-
-
 import { errorHandler, notFoundHandler } from './shared/httpErrorHandlers';
+import { InMemoryContractRepository } from './modules/contracts/adapters/persistence/InMemoryContractRepository';
+import { ContractService } from './modules/contracts/application/ContractService';
+import { createContractRouter } from './modules/contracts/adapters/http/contractRoutes';
+import { createContractRepository } from './modules/contracts/adapters/persistence/createContractRepository';
+
+
 
 
 const app = express();
@@ -38,9 +31,6 @@ const propertyService = new PropertyService(propertyRepository);
 app.use('/properties', createPropertyRouter(propertyService));
 
 
-// ===== [A] Properties: repositorio, servicio y rutas =====
-
-
 // ===== [B] Tenants: repositorio, servicio y rutas =====
 const tenantRepository = createTenantRepository();
 const tenantService = new TenantService(tenantRepository);
@@ -52,11 +42,12 @@ const paymentRepository = createPaymentRepository();
 const paymentService = new PaymentService(paymentRepository, getToday);
 app.use('/payments', createPaymentRouter(paymentService));
 
+const contractRepository = createContractRepository();
+const contractService = new ContractService(contractRepository, propertyRepository, tenantRepository, paymentRepository);
+app.use('/contracts', createContractRouter(contractService));
 
-// ===== [A] Contracts: repositorio, servicio y rutas =====
 
 
-// ===== fin de los módulos =====
 
 // Si ninguna ruta coincidió: 404 en JSON
 app.use(notFoundHandler);
