@@ -1,0 +1,59 @@
+.property-card {
+  min-width: 0;
+  padding: 1.25rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+}
+
+.property-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.property-card-title {
+  font-size: 1.125rem;
+  overflow-wrap: anywhere;
+}
+
+.property-card-status {
+  flex-shrink: 0;
+  padding: 2px 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 999px;
+}
+
+.property-card-status-disponible {
+  color: var(--color-success);
+  background: var(--color-success-soft);
+}
+
+.property-card-status-arrendada {
+  color: var(--color-primary);
+  background: var(--color-primary-soft);
+}
+
+.property-card-status-mantencion {
+  color: var(--color-warning);
+  background: var(--color-warning-soft);
+}
+
+.property-card-type {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: var(--color-muted);
+}
+
+.property-card-price {
+  margin-top: 0.75rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.property-card-owner {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+}
