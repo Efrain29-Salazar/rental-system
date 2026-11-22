@@ -1,17 +1,12 @@
 import express from 'express';
 import cors from 'cors';
+import { PropertyService } from './modules/properties/application/PropertyService';
+import { createPropertyRouter } from './modules/properties/adapters/http/propertyRoutes';
+import { createPropertyRepository } from './modules/properties/adapters/persistence/createPropertyRepository';
+
 
 import { errorHandler, notFoundHandler } from './shared/httpErrorHandlers';
 
-// ===== imports [A] Properties =====
-
-// ===== imports [B] Tenants =====
-
-// ===== imports [B] Payments =====
-
-// ===== imports [A] Contracts =====
-
-// ===== fin de los imports =====
 
 const app = express();
 
@@ -20,20 +15,10 @@ app.use(cors());
 
 // Permite leer el cuerpo de las peticiones en formato JSON
 app.use(express.json());
+const propertyRepository = createPropertyRepository();
+const propertyService = new PropertyService(propertyRepository);
+app.use('/properties', createPropertyRouter(propertyService));
 
-// ===== [A] Properties: repositorio, servicio y rutas =====
-
-
-// ===== [B] Tenants: repositorio, servicio y rutas =====
-
-
-// ===== [B] Payments: repositorio, servicio y rutas =====
-
-
-// ===== [A] Contracts: repositorio, servicio y rutas =====
-
-
-// ===== fin de los módulos =====
 
 // Si ninguna ruta coincidió: 404 en JSON
 app.use(notFoundHandler);
