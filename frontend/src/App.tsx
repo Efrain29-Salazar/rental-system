@@ -11,6 +11,7 @@ import { PropertiesPage } from './pages/PropertiesPage';
 // ===== imports [B] Tenants =====
 
 // ===== imports [A] Contracts =====
+import { ContractsPage } from './pages/ContractsPage';
 
 // ===== imports [B] Payments =====
 
@@ -25,7 +26,7 @@ const sectionPages: Record<Section, ReactNode> = {
   tenants: <p className="app-placeholder">Inquilinos: próximamente</p>,
 
   // ===== [A] Contracts =====
-  contracts: <p className="app-placeholder">Contratos: próximamente</p>,
+  contracts: <ContractsPage />,
 
   // ===== [B] Payments =====
   payments: <p className="app-placeholder">Pagos: próximamente</p>,
