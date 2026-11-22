@@ -14,6 +14,8 @@ import { errorHandler, notFoundHandler } from './shared/httpErrorHandlers';
 import { InMemoryContractRepository } from './modules/contracts/adapters/persistence/InMemoryContractRepository';
 import { ContractService } from './modules/contracts/application/ContractService';
 import { createContractRouter } from './modules/contracts/adapters/http/contractRoutes';
+import { createContractRepository } from './modules/contracts/adapters/persistence/createContractRepository';
+
 
 
 
@@ -40,9 +42,10 @@ const paymentRepository = createPaymentRepository();
 const paymentService = new PaymentService(paymentRepository, getToday);
 app.use('/payments', createPaymentRouter(paymentService));
 
-const contractRepository = new InMemoryContractRepository();
+const contractRepository = createContractRepository();
 const contractService = new ContractService(contractRepository, propertyRepository, tenantRepository, paymentRepository);
 app.use('/contracts', createContractRouter(contractService));
+
 
 
 
