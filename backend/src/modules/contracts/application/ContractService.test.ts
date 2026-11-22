@@ -84,3 +84,37 @@ describe('ContractService.list', () => {
     await expect(service.list('vencido')).rejects.toThrow(new DomainError('El estado no es válido'));
   });
 });
+
+describe('ContractService.finish', () => {
+  it('finishes an active contract and makes the property available again', async () => {
+    const { service, input, propertyRepository } = await setup();
+    const contract = await service.create(input);
+
+    const finished = await service.finish(contract.id);
+
+    expect(finished.status).toBe('finalizado');
+    expect((await propertyRepository.findById(input.propertyId))?.status).toBe('disponible');
+  });
+
+  it('throws NotFoundError when the contract does not exist', async () => {
+    const { service } = await setup();
+
+    await expect(service.finish(999)).rejects.toThrow(new NotFoundError('Contrato no encontrado'));
+  });
+
+  it('rejects a contract that is not active', async () => {
+    const { service, input } = await setup();
+    const contract = await service.create(input);
+    await service.finish(contract.id);
+
+    await expect(service.finish(contract.id)).rejects.toThrow(new DomainError('Solo se puede finalizar un contrato activo'));
+  });
+
+  it('allows leasing the property again after finishing the contract', async () => {
+    const { service, input } = await setup();
+    const contract = await service.create(input);
+    await service.finish(contract.id);
+
+    expect((await service.create(input)).id).toBe(2);
+  });
+});

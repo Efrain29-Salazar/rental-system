@@ -16,7 +16,7 @@ export class ContractService {
     private readonly paymentRepository: PaymentRepository,
   ) {}
 
-  // CASO DE USO 7: listar contratos. El filtro ?status= es opcional.
+  // CASO DE USO 7: listar contratos. El filtro status= es opcional.
   list = async (status?: unknown): Promise<Contract[]> => this.contractRepository.findAll(parseContractStatus(status));
 
   // CASO DE USO 6: crear un contrato.
@@ -46,5 +46,28 @@ export class ContractService {
     await this.propertyRepository.updateStatus(contract.propertyId, 'arrendada');
 
     return contract;
+  };
+
+  // CASO DE USO 10: finalizar un contrato. La propiedad vuelve a quedar disponible.
+  finish = async (id: number): Promise<Contract> => {
+    const contract = await this.contractRepository.findById(id);
+
+    if (!contract) {
+      throw new NotFoundError('Contrato no encontrado');
+    }
+
+    if (contract.status !== 'activo') {
+      throw new DomainError('Solo se puede finalizar un contrato activo');
+    }
+
+    const finished = await this.contractRepository.updateStatus(id, 'finalizado');
+
+    if (!finished) {
+      throw new NotFoundError('Contrato no encontrado');
+    }
+
+    await this.propertyRepository.updateStatus(contract.propertyId, 'disponible');
+
+    return finished;
   };
 }
