@@ -6,6 +6,11 @@ import { errorHandler, notFoundHandler } from './shared/httpErrorHandlers';
 // ===== imports [A] Properties =====
 
 // ===== imports [B] Tenants =====
+import { createTenantRepository } from './modules/tenants/adapters/persistence/createTenantRepository';
+import { TenantService } from './modules/tenants/application/TenantService';
+import { createTenantRouter } from './modules/tenants/adapters/http/tenantRoutes';
+
+
 
 // ===== imports [B] Payments =====
 
@@ -25,6 +30,9 @@ app.use(express.json());
 
 
 // ===== [B] Tenants: repositorio, servicio y rutas =====
+const tenantRepository = createTenantRepository();
+const tenantService = new TenantService(tenantRepository);
+app.use('/tenants', createTenantRouter(tenantService));
 
 
 // ===== [B] Payments: repositorio, servicio y rutas =====
