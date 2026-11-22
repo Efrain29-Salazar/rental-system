@@ -7,6 +7,20 @@ import { createPropertyRepository } from './modules/properties/adapters/persiste
 
 import { errorHandler, notFoundHandler } from './shared/httpErrorHandlers';
 
+// ===== imports [A] Properties =====
+
+// ===== imports [B] Tenants =====
+import { createTenantRepository } from './modules/tenants/adapters/persistence/createTenantRepository';
+import { TenantService } from './modules/tenants/application/TenantService';
+import { createTenantRouter } from './modules/tenants/adapters/http/tenantRoutes';
+
+
+
+// ===== imports [B] Payments =====
+
+
+import { errorHandler, notFoundHandler } from './shared/httpErrorHandlers';
+
 
 const app = express();
 
@@ -19,6 +33,24 @@ const propertyRepository = createPropertyRepository();
 const propertyService = new PropertyService(propertyRepository);
 app.use('/properties', createPropertyRouter(propertyService));
 
+
+// ===== [A] Properties: repositorio, servicio y rutas =====
+
+
+// ===== [B] Tenants: repositorio, servicio y rutas =====
+const tenantRepository = createTenantRepository();
+const tenantService = new TenantService(tenantRepository);
+app.use('/tenants', createTenantRouter(tenantService));
+
+
+// ===== [B] Payments: repositorio, servicio y rutas =====
+
+
+// ===== [A] Contracts: repositorio, servicio y rutas =====
+
+
+// ===== fin de los módulos =====
+ feature/tenants-api
 
 // Si ninguna ruta coincidió: 404 en JSON
 app.use(notFoundHandler);
