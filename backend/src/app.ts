@@ -17,6 +17,10 @@ import { createTenantRouter } from './modules/tenants/adapters/http/tenantRoutes
 
 
 // ===== imports [B] Payments =====
+import { createPaymentRepository } from './modules/payments/adapters/persistence/createPaymentRepository';
+import { PaymentService } from './modules/payments/application/PaymentService';
+import { createPaymentRouter } from './modules/payments/adapters/http/paymentRoutes';
+import { getToday } from './shared/dates';
 
 
 import { errorHandler, notFoundHandler } from './shared/httpErrorHandlers';
@@ -44,13 +48,15 @@ app.use('/tenants', createTenantRouter(tenantService));
 
 
 // ===== [B] Payments: repositorio, servicio y rutas =====
+const paymentRepository = createPaymentRepository();
+const paymentService = new PaymentService(paymentRepository, getToday);
+app.use('/payments', createPaymentRouter(paymentService));
 
 
 // ===== [A] Contracts: repositorio, servicio y rutas =====
 
 
 // ===== fin de los módulos =====
- feature/tenants-api
 
 // Si ninguna ruta coincidió: 404 en JSON
 app.use(notFoundHandler);
