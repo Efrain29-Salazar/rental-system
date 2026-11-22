@@ -1,0 +1,6 @@
+/* Una cuadrícula que se adapta sola. min(280px, 100%) evita desbordes en pantallas muy angostas. */
+.contract-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+  gap: 1rem;
+}
