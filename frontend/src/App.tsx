@@ -6,6 +6,7 @@ import { MainMenu } from './components/MainMenu';
 import type { Section } from './types/section';
 
 // ===== imports [A] Properties =====
+import { PropertiesPage } from './pages/PropertiesPage';
 
 // ===== imports [B] Tenants =====
 
@@ -18,7 +19,7 @@ import type { Section } from './types/section';
 // Qué se muestra en cada sección. Cada integrante reemplaza SOLO su línea cuando su página esté lista.
 const sectionPages: Record<Section, ReactNode> = {
   // ===== [A] Properties =====
-  properties: <p className="app-placeholder">Propiedades: próximamente</p>,
+  properties: <PropertiesPage />,
 
   // ===== [B] Tenants =====
   tenants: <p className="app-placeholder">Inquilinos: próximamente</p>,
@@ -46,4 +47,3 @@ const App = () => {
 };
 
 export default App;
-
