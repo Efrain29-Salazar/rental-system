@@ -1,0 +1,23 @@
+.tenant-card {
+  min-width: 0;
+  padding: 1.25rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+}
+
+.tenant-card-title {
+  font-size: 1.125rem;
+}
+
+.tenant-card-email,
+.tenant-card-phone {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  /* Un texto largo (como un correo) se parte en vez de salirse de la tarjeta. */
+  overflow-wrap: anywhere;
+}
+
+.tenant-card-email {
+  margin-top: 0.25rem;
+}
