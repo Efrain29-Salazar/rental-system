@@ -12,8 +12,7 @@ import { TenantsPage } from './pages/TenantsPage';
 
 import { ContractsPage } from './pages/ContractsPage';
 
-// ===== imports [B] Payments =====
-
+import { PaymentsPage } from './pages/PaymentsPage';
 // ===== fin de los imports =====
 
 // Qué se muestra en cada sección. Cada integrante reemplaza SOLO su línea cuando su página esté lista.
@@ -25,8 +24,8 @@ const sectionPages: Record<Section, ReactNode> = {
 
   contracts: <ContractsPage />,
 
-  // ===== [B] Payments =====
-  payments: <p className="app-placeholder">Pagos: próximamente</p>,
+  payments: <PaymentsPage />,
+
 
   // ===== fin de las secciones =====
 };
