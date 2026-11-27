@@ -1,47 +1,64 @@
-.contracts-page-header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  margin: 2rem 0 1rem;
+/* CONTRATOS (naranja): documentos. Cada tarjeta lleva una marca lateral según su estado y un fondo tipo papel. */
+.contracts-page .contract-list {
+  grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
 }
 
-.contracts-page-title {
-  font-size: 1.75rem;
+.contracts-page .contract-card {
+  background: linear-gradient(180deg, #fff 60%, #fff8f1);
+  border-left: 8px solid var(--accent);
 }
 
-.contracts-page-count {
-  font-size: 0.875rem;
-  color: var(--color-muted);
+.contracts-page .contract-card-finalizado-card {
+  border-left-color: #64708a;
+  background: linear-gradient(180deg, #fff 60%, #f3f4f8);
+}
+
+.contracts-page .contract-card-cancelado-card {
+  border-left-color: #e11d48;
+  background: linear-gradient(180deg, #fff 60%, #fff3f5);
+}
+
+.contracts-page .contract-card-activo-card {
+  border-left-color: #16a34a;
 }
 
 /* El filtro por estado, encima de la lista. */
 .contracts-page-filter {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  gap: 0.625rem;
+  width: fit-content;
+  max-width: 100%;
+  margin-bottom: 1.25rem;
+  padding: 0.5rem 0.75rem 0.5rem 1rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
 }
 
 .contracts-page-filter label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
   font-size: 0.875rem;
-  font-weight: 600;
+  font-weight: 700;
+}
+
+.contracts-page-filter label svg {
+  color: var(--accent);
 }
 
 .contracts-page-filter select {
-  padding: 0.5rem 0.75rem;
+  padding: 0.35rem 0.75rem;
   font: inherit;
-  color: var(--color-text);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
+  font-weight: 600;
+  color: var(--accent-dark);
+  background: var(--accent-soft);
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
 }
 
-@media (max-width: 480px) {
-  .contracts-page-header {
-    margin: 1.25rem 0 0.75rem;
-  }
-
-  .contracts-page-title {
-    font-size: 1.5rem;
-  }
+.contracts-page-filter select:focus-visible {
+  outline: 3px solid var(--accent-focus);
 }

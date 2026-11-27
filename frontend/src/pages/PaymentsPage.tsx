@@ -3,9 +3,11 @@ import { useEffect, useState } from 'react';
 import { getErrorMessage } from '../api/http';
 import { getOverduePayments, payPayment } from '../api/payments';
 import { Notice } from '../components/Notice';
+import { PageHeader } from '../components/PageHeader';
+import { StatsRow } from '../components/StatsRow';
 import { PaymentList } from '../components/PaymentList';
 import type { Payment } from '../types/payment';
-import { formatMoney } from '../utils/format';
+import { formatMoney, getDaysOverdue } from '../utils/format';
 import './PaymentsPage.css';
 
 export const PaymentsPage = () => {
@@ -64,13 +66,26 @@ export const PaymentsPage = () => {
   const totalAmount = payments.reduce((sum, payment) => sum + payment.amount, 0);
 
   return (
-    <section>
-      <div className="payments-page-header">
-        <h2 className="payments-page-title">Pagos morosos</h2>
-        <p className="payments-page-summary">
-          {payments.length} {payments.length === 1 ? 'pago' : 'pagos'} · Total {formatMoney(totalAmount)}
-        </p>
-      </div>
+    <section className="payments-page">
+      <PageHeader
+        icon="coins"
+        title="Pagos morosos"
+        subtitle="Cobros vencidos que están esperando ser registrados"
+        meta={`${payments.length} ${payments.length === 1 ? 'pago' : 'pagos'} · Total ${formatMoney(totalAmount)}`}
+      />
+
+      <StatsRow
+        stats={[
+          { icon: 'alert', label: 'Pagos vencidos', value: String(payments.length), tone: 'red' },
+          { icon: 'coins', label: 'Total adeudado', value: formatMoney(totalAmount), tone: 'amber' },
+          {
+            icon: 'clock',
+            label: 'Mayor atraso',
+            value: `${Math.max(0, ...payments.map((p) => getDaysOverdue(p.dueDate)))} días`,
+            tone: 'gray',
+          },
+        ]}
+      />
 
       {errorMessage && <Notice kind="error" message={errorMessage} />}
       {isLoading && <Notice kind="info" message="Cargando pagos..." />}

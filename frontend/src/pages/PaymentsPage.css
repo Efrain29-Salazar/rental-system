@@ -1,27 +1,28 @@
-.payments-page-header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0.25rem 1rem;
-  margin: 2rem 0 1rem;
+/* PAGOS (rosa/rojo): zona de alerta. Franja de aviso arriba y tarjetas con tinte rojo y monto grande. */
+.payments-page::before {
+  content: 'Atención: estos cobros ya vencieron';
+  display: block;
+  margin: 1.5rem 0 -0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #7a0f2a;
+  background: repeating-linear-gradient(-45deg, #ffe0e7 0 14px, #fff 14px 28px);
+  border: 1px dashed #e11d48;
+  border-radius: 12px;
 }
 
-.payments-page-title {
-  font-size: 1.75rem;
+.payments-page .payment-card {
+  background: linear-gradient(180deg, #fff 55%, #fff1f4);
+  border-color: #ffc2ce;
 }
 
-.payments-page-summary {
-  font-size: 0.875rem;
-  color: var(--color-muted);
+.payments-page .payment-card-amount {
+  font-size: 2.2rem;
 }
 
-@media (max-width: 480px) {
-  .payments-page-header {
-    margin: 1.25rem 0 0.75rem;
-  }
-
-  .payments-page-title {
-    font-size: 1.5rem;
-  }
+.payments-page .page-section-title::after {
+  background: repeating-linear-gradient(-45deg, #e11d48 0 6px, transparent 6px 12px);
 }

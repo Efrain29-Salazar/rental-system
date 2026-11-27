@@ -1,15 +1,25 @@
 .notice {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
   padding: 0.75rem 1rem;
-  border-radius: 8px;
-  font-size: 0.875rem;
+  border-radius: 14px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.notice svg {
+  flex-shrink: 0;
 }
 
 .notice-info {
-  color: var(--color-neutral);
-  background: var(--color-neutral-soft);
+  color: #1e3a8a;
+  background: #e3ecff;
+  border: 1px solid #c3d5ff;
 }
 
 .notice-error {
   color: var(--color-danger);
   background: var(--color-danger-soft);
+  border: 1px solid #ffc2ce;
 }

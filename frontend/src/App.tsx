@@ -38,7 +38,10 @@ const App = () => {
     <div>
       <Header />
       <MainMenu activeSection={activeSection} onChange={setActiveSection} />
-      <main className="container">{sectionPages[activeSection]}</main>
+      {/* data-module da a toda la sección el color de su módulo. key hace que la animación de entrada se repita al cambiar. */}
+      <main className="container" data-module={activeSection} key={activeSection}>
+        {sectionPages[activeSection]}
+      </main>
     </div>
   );
 };

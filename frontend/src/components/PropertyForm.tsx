@@ -4,6 +4,7 @@ import type { FormEvent } from 'react';
 import { getErrorMessage } from '../api/http';
 import { PROPERTY_TYPES, PROPERTY_TYPE_LABELS } from '../data/propertyOptions';
 import type { NewProperty, PropertyType } from '../types/property';
+import { Icon } from './Icon';
 import { Notice } from './Notice';
 import './PropertyForm.css';
 
@@ -42,16 +43,27 @@ export const PropertyForm = ({ onSubmit }: PropertyFormProps) => {
 
   // noValidate: la validación la hace la API y responde con mensajes en español (el navegador mostraría los suyos).
   return (
-    <form className="property-form" onSubmit={handleSubmit} noValidate>
-      <h3 className="property-form-title">Registrar propiedad</h3>
+    <form className="form-card property-form" onSubmit={handleSubmit} noValidate>
+      <h3 className="form-card-title">
+        <span className="icon-tile">
+          <Icon name="plus" size={20} />
+        </span>
+        Registrar propiedad
+      </h3>
 
-      <div className="property-form-fields">
+      <div className="form-grid">
         <div className="field">
-          <label htmlFor="property-address">Dirección</label>
+          <label htmlFor="property-address">
+            <Icon name="pin" size={15} />
+            Dirección
+          </label>
           <input id="property-address" type="text" value={address} onChange={(event) => setAddress(event.target.value)} />
         </div>
         <div className="field">
-          <label htmlFor="property-type">Tipo</label>
+          <label htmlFor="property-type">
+            <Icon name="building" size={15} />
+            Tipo
+          </label>
           <select id="property-type" value={type} onChange={(event) => setType(event.target.value as PropertyType)}>
             {PROPERTY_TYPES.map((option) => (
               <option key={option} value={option}>
@@ -61,7 +73,10 @@ export const PropertyForm = ({ onSubmit }: PropertyFormProps) => {
           </select>
         </div>
         <div className="field">
-          <label htmlFor="property-price">Precio mensual (USD)</label>
+          <label htmlFor="property-price">
+            <Icon name="coins" size={15} />
+            Precio mensual (USD)
+          </label>
           <input
             id="property-price"
             type="number"
@@ -72,7 +87,10 @@ export const PropertyForm = ({ onSubmit }: PropertyFormProps) => {
           />
         </div>
         <div className="field">
-          <label htmlFor="property-owner">Propietario</label>
+          <label htmlFor="property-owner">
+            <Icon name="owner" size={15} />
+            Propietario
+          </label>
           <input id="property-owner" type="text" value={owner} onChange={(event) => setOwner(event.target.value)} />
         </div>
       </div>
@@ -80,6 +98,7 @@ export const PropertyForm = ({ onSubmit }: PropertyFormProps) => {
       {errorMessage && <Notice kind="error" message={errorMessage} />}
 
       <button type="submit" className="button" disabled={isSubmitting}>
+        <Icon name={isSubmitting ? 'loader' : 'plus'} size={18} className={isSubmitting ? 'spin' : undefined} />
         {isSubmitting ? 'Guardando...' : 'Registrar propiedad'}
       </button>
     </form>

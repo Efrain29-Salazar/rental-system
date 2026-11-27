@@ -6,7 +6,10 @@ import { getProperties } from '../api/properties';
 import { getTenants } from '../api/tenants';
 import { ContractForm } from '../components/ContractForm';
 import { ContractList } from '../components/ContractList';
+import { Icon } from '../components/Icon';
 import { Notice } from '../components/Notice';
+import { PageHeader } from '../components/PageHeader';
+import { StatsRow } from '../components/StatsRow';
 import { CONTRACT_FILTER_OPTIONS } from '../data/contractOptions';
 import type { Contract, ContractStatus, NewContract } from '../types/contract';
 import type { Property } from '../types/property';
@@ -83,18 +86,30 @@ export const ContractsPage = () => {
   const availableProperties = properties.filter((property) => property.status === 'disponible');
 
   return (
-    <section>
-      <div className="contracts-page-header">
-        <h2 className="contracts-page-title">Contratos</h2>
-        <p className="contracts-page-count">
-          {contracts.length} {contracts.length === 1 ? 'contrato' : 'contratos'}
-        </p>
-      </div>
+    <section className="contracts-page">
+      <PageHeader
+        icon="file"
+        title="Contratos"
+        subtitle="Quién arrienda qué, desde cuándo y por cuánto"
+        meta={`${contracts.length} ${contracts.length === 1 ? 'contrato' : 'contratos'}`}
+      />
+
+      <StatsRow
+        stats={[
+          { icon: 'file', label: 'Contratos mostrados', value: String(contracts.length) },
+          { icon: 'check', label: 'Activos', value: String(contracts.filter((c) => c.status === 'activo').length), tone: 'green' },
+          { icon: 'flag', label: 'Finalizados', value: String(contracts.filter((c) => c.status === 'finalizado').length), tone: 'gray' },
+          { icon: 'xcircle', label: 'Cancelados', value: String(contracts.filter((c) => c.status === 'cancelado').length), tone: 'red' },
+        ]}
+      />
 
       <ContractForm availableProperties={availableProperties} tenants={tenants} onSubmit={handleCreate} />
 
       <div className="contracts-page-filter">
-        <label htmlFor="contracts-filter">Estado</label>
+        <label htmlFor="contracts-filter">
+          <Icon name="filter" size={16} />
+          Estado
+        </label>
         <select
           id="contracts-filter"
           value={statusFilter}

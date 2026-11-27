@@ -1,47 +1,56 @@
 .payment-card {
-  min-width: 0;
-  padding: 1.25rem;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
+  padding: 1.4rem 1.25rem 1.25rem;
 }
 
 .payment-card-header {
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0.5rem;
+  align-items: center;
+  gap: 0.625rem;
+  width: 100%;
+}
+
+.payment-card-icon {
+  width: 40px;
+  height: 40px;
 }
 
 .payment-card-title {
-  font-size: 1.125rem;
+  font-size: 1.1rem;
 }
 
 .payment-card-amount {
-  font-weight: 700;
-  color: var(--color-primary);
+  margin-top: 0.25rem;
+  font-size: 1.9rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--accent-dark);
 }
 
 .payment-card-due {
-  margin-top: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-size: 0.875rem;
   color: var(--color-muted);
 }
 
+.payment-card-due svg {
+  color: var(--accent);
+}
+
 /* La mora se destaca en rojo. */
 .payment-card-overdue {
-  display: inline-block;
-  margin-top: 0.5rem;
-  padding: 2px 0.625rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--color-danger);
-  background: var(--color-danger-soft);
-  border-radius: 999px;
+  margin-top: 0.25rem;
+  color: #fff;
+  background: #e11d48;
 }
 
 .payment-card-pay {
-  display: block;
   width: 100%;
-  margin-top: 1rem;
+  margin-top: 0.75rem;
 }

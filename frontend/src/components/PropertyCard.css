@@ -1,59 +1,85 @@
 .property-card {
-  min-width: 0;
-  padding: 1.25rem;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 10px;
+  padding: 0;
 }
 
-.property-card-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 0.5rem;
+/* La ilustración ocupa todo el ancho de la tarjeta; la franja de color queda encima. */
+.property-card-art {
+  position: relative;
+  height: 130px;
 }
 
-.property-card-title {
-  font-size: 1.125rem;
-  overflow-wrap: anywhere;
+.property-art {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .property-card-status {
-  flex-shrink: 0;
-  padding: 2px 0.625rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  border-radius: 999px;
+  position: absolute;
+  top: 14px;
+  right: 10px;
+  box-shadow: 0 6px 12px -6px rgba(0, 0, 0, 0.35);
 }
 
 .property-card-status-disponible {
-  color: var(--color-success);
-  background: var(--color-success-soft);
+  color: #fff;
+  background: #16a34a;
 }
 
 .property-card-status-arrendada {
-  color: var(--color-primary);
-  background: var(--color-primary-soft);
+  color: #fff;
+  background: #0d8f84;
 }
 
 .property-card-status-mantencion {
-  color: var(--color-warning);
-  background: var(--color-warning-soft);
+  color: #3b2300;
+  background: #fbbf24;
+}
+
+.property-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1rem 1.25rem 1.25rem;
+}
+
+.property-card-title {
+  font-size: 1.1rem;
+  overflow-wrap: anywhere;
+}
+
+.property-card-type,
+.property-card-price,
+.property-card-owner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .property-card-type {
-  margin-top: 0.25rem;
   font-size: 0.875rem;
-  color: var(--color-muted);
+  font-weight: 600;
+  color: var(--accent-dark);
 }
 
 .property-card-price {
-  margin-top: 0.75rem;
-  font-weight: 700;
-  color: var(--color-primary);
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.75rem;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--accent-dark);
+  background: var(--accent-soft);
+  border-radius: 12px;
+}
+
+.property-card-price span {
+  font-size: 0.8rem;
+  font-weight: 600;
+  opacity: 0.8;
 }
 
 .property-card-owner {
+  margin-top: 0.25rem;
   font-size: 0.875rem;
   color: var(--color-muted);
 }

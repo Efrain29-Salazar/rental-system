@@ -1,3 +1,4 @@
+import { DomainError } from '../../../shared/DomainError';
 import { NotFoundError } from '../../../shared/NotFoundError';
 import { Tenant, parseNewTenant } from '../domain/Tenant';
 import { TenantRepository } from '../ports/TenantRepository';
@@ -20,6 +21,14 @@ export class TenantService {
     return tenant;
   };
 
-  // CASO DE USO 4: registrar un inquilino. El dominio valida (DomainError → 400).
-  create = async (input: unknown): Promise<Tenant> => this.repository.save(parseNewTenant(input));
+  // CASO DE USO 4: registrar un inquilino. El dominio valida (DomainError → 400) y la cédula no puede repetirse.
+  create = async (input: unknown): Promise<Tenant> => {
+    const newTenant = parseNewTenant(input);
+
+    if (await this.repository.findByCedula(newTenant.cedula)) {
+      throw new DomainError('Ya existe un inquilino con esa cédula');
+    }
+
+    return this.repository.save(newTenant);
+  };
 }

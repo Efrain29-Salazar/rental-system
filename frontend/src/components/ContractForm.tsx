@@ -6,6 +6,7 @@ import type { NewContract } from '../types/contract';
 import type { Property } from '../types/property';
 import type { Tenant } from '../types/tenant';
 import { formatMoney } from '../utils/format';
+import { Icon } from './Icon';
 import { Notice } from './Notice';
 import './ContractForm.css';
 
@@ -68,16 +69,24 @@ export const ContractForm = ({ availableProperties, tenants, onSubmit }: Contrac
 
   // noValidate: la validación la hace la API y responde con mensajes en español (el navegador mostraría los suyos).
   return (
-    <form className="contract-form" onSubmit={handleSubmit} noValidate>
-      <h3 className="contract-form-title">Crear contrato</h3>
+    <form className="form-card contract-form" onSubmit={handleSubmit} noValidate>
+      <h3 className="form-card-title">
+        <span className="icon-tile">
+          <Icon name="plus" size={20} />
+        </span>
+        Crear contrato
+      </h3>
 
       {!canCreate && (
         <Notice kind="info" message="Para crear un contrato necesitas al menos una propiedad disponible y un inquilino." />
       )}
 
-      <div className="contract-form-fields">
+      <div className="form-grid">
         <div className="field">
-          <label htmlFor="contract-property">Propiedad disponible</label>
+          <label htmlFor="contract-property">
+            <Icon name="home" size={15} />
+            Propiedad disponible
+          </label>
           <select id="contract-property" value={propertyId} onChange={(event) => handlePropertyChange(event.target.value)}>
             <option value="">Selecciona una propiedad</option>
             {availableProperties.map((property) => (
@@ -88,26 +97,38 @@ export const ContractForm = ({ availableProperties, tenants, onSubmit }: Contrac
           </select>
         </div>
         <div className="field">
-          <label htmlFor="contract-tenant">Inquilino</label>
+          <label htmlFor="contract-tenant">
+            <Icon name="user" size={15} />
+            Inquilino
+          </label>
           <select id="contract-tenant" value={tenantId} onChange={(event) => setTenantId(event.target.value)}>
             <option value="">Selecciona un inquilino</option>
             {tenants.map((tenant) => (
               <option key={tenant.id} value={tenant.id}>
-                {tenant.name}
+                {tenant.name} · C.I. {tenant.cedula}
               </option>
             ))}
           </select>
         </div>
         <div className="field">
-          <label htmlFor="contract-start">Fecha de inicio</label>
+          <label htmlFor="contract-start">
+            <Icon name="calendar" size={15} />
+            Fecha de inicio
+          </label>
           <input id="contract-start" type="date" value={startDate} onChange={(event) => setStartDate(event.target.value)} />
         </div>
         <div className="field">
-          <label htmlFor="contract-end">Fecha de término</label>
+          <label htmlFor="contract-end">
+            <Icon name="flag" size={15} />
+            Fecha de término
+          </label>
           <input id="contract-end" type="date" value={endDate} onChange={(event) => setEndDate(event.target.value)} />
         </div>
         <div className="field">
-          <label htmlFor="contract-amount">Monto mensual (USD)</label>
+          <label htmlFor="contract-amount">
+            <Icon name="coins" size={15} />
+            Monto mensual (USD)
+          </label>
           <input
             id="contract-amount"
             type="number"
@@ -122,6 +143,7 @@ export const ContractForm = ({ availableProperties, tenants, onSubmit }: Contrac
       {errorMessage && <Notice kind="error" message={errorMessage} />}
 
       <button type="submit" className="button" disabled={isSubmitting || !canCreate}>
+        <Icon name={isSubmitting ? 'loader' : 'plus'} size={18} className={isSubmitting ? 'spin' : undefined} />
         {isSubmitting ? 'Guardando...' : 'Crear contrato'}
       </button>
     </form>

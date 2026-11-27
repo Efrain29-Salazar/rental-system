@@ -1,5 +1,6 @@
 export interface Tenant {
   id: number;
+  cedula: string;
   name: string;
   email: string;
   phone: string;

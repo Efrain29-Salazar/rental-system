@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { getErrorMessage } from '../api/http';
 import { createTenant, getTenants } from '../api/tenants';
 import { Notice } from '../components/Notice';
+import { PageHeader } from '../components/PageHeader';
+import { StatsRow } from '../components/StatsRow';
 import { TenantForm } from '../components/TenantForm';
 import { TenantList } from '../components/TenantList';
 import type { NewTenant, Tenant } from '../types/tenant';
@@ -52,13 +54,21 @@ export const TenantsPage = () => {
   };
 
   return (
-    <section>
-      <div className="tenants-page-header">
-        <h2 className="tenants-page-title">Inquilinos</h2>
-        <p className="tenants-page-count">
-          {tenants.length} {tenants.length === 1 ? 'inquilino' : 'inquilinos'}
-        </p>
-      </div>
+    <section className="tenants-page">
+      <PageHeader
+        icon="users"
+        title="Inquilinos"
+        subtitle="Las personas que arriendan tus propiedades"
+        meta={`${tenants.length} ${tenants.length === 1 ? 'inquilino' : 'inquilinos'}`}
+      />
+
+      <StatsRow
+        stats={[
+          { icon: 'users', label: 'Inquilinos registrados', value: String(tenants.length) },
+          { icon: 'mail', label: 'Con correo', value: String(tenants.filter((t) => t.email.trim() !== '').length), tone: 'blue' },
+          { icon: 'phone', label: 'Con teléfono', value: String(tenants.filter((t) => t.phone.trim() !== '').length), tone: 'amber' },
+        ]}
+      />
 
       <TenantForm onSubmit={handleCreate} />
 
@@ -67,6 +77,7 @@ export const TenantsPage = () => {
       {!isLoading && !errorMessage && tenants.length === 0 && (
         <Notice kind="info" message="Todavía no hay inquilinos registrados." />
       )}
+      {tenants.length > 0 && <h3 className="page-section-title">Directorio de inquilinos</h3>}
       {tenants.length > 0 && <TenantList tenants={tenants} />}
     </section>
   );

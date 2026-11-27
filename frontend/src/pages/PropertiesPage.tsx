@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { getErrorMessage } from '../api/http';
 import { createProperty, getProperties } from '../api/properties';
 import { Notice } from '../components/Notice';
+import { PageHeader } from '../components/PageHeader';
+import { StatsRow } from '../components/StatsRow';
 import { PropertyForm } from '../components/PropertyForm';
 import { PropertyList } from '../components/PropertyList';
 import type { NewProperty, Property } from '../types/property';
@@ -52,13 +54,22 @@ export const PropertiesPage = () => {
   };
 
   return (
-    <section>
-      <div className="properties-page-header">
-        <h2 className="properties-page-title">Propiedades</h2>
-        <p className="properties-page-count">
-          {properties.length} {properties.length === 1 ? 'propiedad' : 'propiedades'}
-        </p>
-      </div>
+    <section className="properties-page">
+      <PageHeader
+        icon="home"
+        title="Propiedades"
+        subtitle="Casas, departamentos, locales y oficinas"
+        meta={`${properties.length} ${properties.length === 1 ? 'propiedad' : 'propiedades'}`}
+      />
+
+      <StatsRow
+        stats={[
+          { icon: 'home', label: 'Total', value: String(properties.length) },
+          { icon: 'check', label: 'Disponibles', value: String(properties.filter((p) => p.status === 'disponible').length), tone: 'green' },
+          { icon: 'key', label: 'Arrendadas', value: String(properties.filter((p) => p.status === 'arrendada').length), tone: 'blue' },
+          { icon: 'wrench', label: 'En mantención', value: String(properties.filter((p) => p.status === 'mantencion').length), tone: 'amber' },
+        ]}
+      />
 
       <PropertyForm onSubmit={handleCreate} />
 
@@ -67,6 +78,7 @@ export const PropertiesPage = () => {
       {!isLoading && !errorMessage && properties.length === 0 && (
         <Notice kind="info" message="Todavía no hay propiedades registradas." />
       )}
+      {properties.length > 0 && <h3 className="page-section-title">Catálogo de propiedades</h3>}
       {properties.length > 0 && <PropertyList properties={properties} />}
     </section>
   );
